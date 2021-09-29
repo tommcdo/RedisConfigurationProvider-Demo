@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace SampleApp
@@ -17,7 +18,9 @@ namespace SampleApp
                 {
                     webBuilder.ConfigureAppConfiguration(configuration =>
                     {
-                        configuration.AddRedis("localhost", TimeSpan.FromSeconds(5));
+                        var tempConfig = configuration.Build();
+                        var redisConfiguration = tempConfig.GetSection("RedisConfiguration").Get<RedisConfiguration>();
+                        configuration.AddRedis(redisConfiguration.Endpoint, redisConfiguration.RefreshInterval);
                     });
                     webBuilder.UseStartup<Startup>();
                 });
