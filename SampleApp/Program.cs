@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -16,7 +17,7 @@ namespace SampleApp
                 {
                     webBuilder.ConfigureAppConfiguration(configuration =>
                     {
-                        configuration.AddRedis("localhost");
+                        configuration.AddRedis("localhost", TimeSpan.FromSeconds(5));
                     });
                     webBuilder.UseStartup<Startup>();
                 });
