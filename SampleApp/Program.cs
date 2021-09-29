@@ -14,6 +14,10 @@ namespace SampleApp
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureAppConfiguration(configuration =>
+                    {
+                        configuration.AddRedis("localhost");
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }
