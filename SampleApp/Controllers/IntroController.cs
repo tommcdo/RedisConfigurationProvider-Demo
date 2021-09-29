@@ -9,9 +9,13 @@ namespace SampleApp.Controllers
     {
         private Person _person;
 
-        public IntroController(IOptions<Person> config)
+        public IntroController(IOptionsMonitor<Person> config)
         {
-            _person = config.Value;
+            _person = config.CurrentValue;
+            config.OnChange(person =>
+            {
+                _person = person;
+            });
         }
 
         [HttpGet]
